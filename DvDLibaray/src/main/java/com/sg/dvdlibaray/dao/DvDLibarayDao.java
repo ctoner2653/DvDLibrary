@@ -14,14 +14,19 @@ import java.util.List;
  */
 public interface DvDLibarayDao {
     
-    DvD addDvD(String title, DvD dvd);
+    DvD addDvD(String title, DvD dvd)
+            throws DvDLibraryDaoException;
     
-    DvD removeDvD(String title);
+    DvD removeDvD(String title)
+            throws DvDLibraryDaoException;
     
-    List<DvD> getAllDvDs();
+    List<DvD> getAllDvDs()
+            throws DvDLibraryDaoException;
     
-    DvD getDvD(String title);
+    DvD getDvD(String title)
+            throws DvDLibraryDaoException;
     
-  
+    void editDvD()
+            throws DvDLibraryDaoException;
     
 }

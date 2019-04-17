@@ -18,6 +18,7 @@ public class DvDLibarayView {
 
     UserIO io = new UserIOConsoleImpl();
     DvDLibarayDao dao = new DvDLibarayFileImpl();
+
     public int printMenuAndGetSelection() {
         io.print("Main Menu");
         io.print("1. Add DVD");
@@ -38,12 +39,15 @@ public class DvDLibarayView {
         String directorName = io.readString("What is the DvDs Directors Name?");
         String studio = io.readString("What is the DvDs production studio?");
         String userRating = io.readString("What is your personal rating of the DvD?");
-        DvD currentDvD = new DvD(title);
+        String id = io.readString("What is the ID?");
+        DvD currentDvD = new DvD(id);
+        currentDvD.setTitle(title);
         currentDvD.setReleaseDate(releaseDate);
         currentDvD.setRating(rating);
         currentDvD.setDirectorName(directorName);
         currentDvD.setStudio(studio);
         currentDvD.setUserRating(userRating);
+
         return currentDvD;
 
     }
@@ -63,7 +67,8 @@ public class DvDLibarayView {
                     + "Rating: " + currentDvD.getRating() + "|| "
                     + "Director's Name: " + currentDvD.getDirectorName() + "|| "
                     + "Studio Name: " + currentDvD.getStudio() + "|| "
-                    + "User Rating: " + currentDvD.getUserRating());
+                    + "User Rating: " + currentDvD.getUserRating() + " || "
+                    + "DVD ID: " + currentDvD.getId());
         }
         io.readString("Please Hit Enter To Continue");
     }
@@ -76,8 +81,8 @@ public class DvDLibarayView {
         io.print("=== REMOVE DVD ===");
     }
 
-    public String getTitleDvDSelection() {
-        String selection = io.readString("What is the DvDs title?");
+    public String getIdDvDSelection() {
+        String selection = io.readString("What is the DvDs ID?");
         return selection;
     }
 
@@ -96,7 +101,8 @@ public class DvDLibarayView {
                     + "Rating: " + currentDvD.getRating() + "|| "
                     + "Director's Name: " + currentDvD.getDirectorName() + "|| "
                     + "Studio Name: " + currentDvD.getStudio() + "|| "
-                    + "User Rating: " + currentDvD.getUserRating());
+                    + "User Rating: " + currentDvD.getUserRating() + " || "
+                    + "DVD ID: " + currentDvD.getId());
 
         } else {
             io.print("DvD does not exist");
@@ -109,20 +115,21 @@ public class DvDLibarayView {
     }
 
     public void editDvD(DvD currentDvD) {
-        dao.removeDvD(currentDvD.getTitle());
+
         if (currentDvD != null) {
             io.print("1. Release Date");
             io.print("2. Rating");
             io.print("3. Studio Name");
             io.print("4. User Rating ");
             io.print("5. Director Name");
+            io.print("6. Title");
 
             int selection = io.readInt("Please select from the"
-                    + " above choices.", 1, 4);
+                    + " above choices.", 1, 6);
             switch (selection) {
                 case 5:
                     String directorName = io.readString("What is the new Directors Name?");
-                    currentDvD.setTitle(directorName);
+                    currentDvD.setDirectorName(directorName);
                     break;
                 case 1:
                     String releaseDate = io.readString("What is the new Release Date?");
@@ -130,29 +137,39 @@ public class DvDLibarayView {
                     break;
                 case 2:
                     String rating = io.readString("What is the new Rating?");
-                    currentDvD.setReleaseDate(rating);
+                    currentDvD.setRating(rating);
                     break;
                 case 3:
                     String studioName = io.readString("What is the new Studio Name?");
-                    currentDvD.setReleaseDate(studioName);
+                    currentDvD.setStudio(studioName);
                     break;
                 case 4:
                     String userRating = io.readString("What is the new User Rating?");
-                    currentDvD.setReleaseDate(userRating);
+                    currentDvD.setUserRating(userRating);
                     break;
+                case 6:
+                    String title = io.readString("What is the new Title?");
+                    currentDvD.setTitle(title);
+                    break;
+
                 default:
                     break;
             }
         } else {
             io.print("DvD does not exist");
         }
-       
-      
+
     }
-    public void errorMessage(){
+
+    public void errorMessage() {
         io.print("Unknown Command");
     }
-    public void goodByeMessage(){
+
+    public void goodByeMessage() {
         io.print("GoodBye");
+    }
+    public void displayErrorMessage(String errorMessage){
+        io.print("=== ERROR ===");
+        io.print(errorMessage);
     }
 }

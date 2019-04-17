@@ -7,6 +7,7 @@ package com.sg.dvdlibaray.controller;
 
 import com.sg.dvdlibaray.dao.DvDLibarayDao;
 import com.sg.dvdlibaray.dao.DvDLibarayFileImpl;
+import com.sg.dvdlibaray.dao.DvDLibraryDaoException;
 import com.sg.dvdlibaray.dto.DvD;
 import com.sg.dvdlibaray.ui.DvDLibarayView;
 
@@ -21,9 +22,10 @@ public class DvDLibarayController {
     DvDLibarayView view = new DvDLibarayView();
     DvDLibarayDao dao = new DvDLibarayFileImpl();
     
-    public void run() {
+    public void run(){
         boolean keepGoing = true;
         int menuSelection = 0;
+        try{
         while (keepGoing) {
 
             menuSelection = getMenuSelection();
@@ -50,7 +52,11 @@ public class DvDLibarayController {
                 default:
                    unknownCommand();
             }
-               goodBye();
+           
+        }
+         goodBye();
+        }catch(DvDLibraryDaoException e){
+              
         }
        
     }
@@ -58,33 +64,33 @@ public class DvDLibarayController {
     private int getMenuSelection() {
         return view.printMenuAndGetSelection();
     }
-    private void addDvD(){
+    private void addDvD() throws DvDLibraryDaoException{
         view.createDvDBanner();
         DvD currentDvD = view.getNewDvDInfo();
-        dao.addDvD(currentDvD.getTitle(), currentDvD);
+        dao.addDvD(currentDvD.getId(), currentDvD);
         view.createDvDSuccess();
     }
-    private void viewAllDvD(){
+    private void viewAllDvD()throws DvDLibraryDaoException{
         view.viewDvDsBanner();
         List<DvD> DvDList = dao.getAllDvDs();
         view.viewAllDvDs(DvDList);
     }
-    private void removeDvD(){
+    private void removeDvD()throws DvDLibraryDaoException{
         view.removeDvDBanner();
-        dao.removeDvD(view.getTitleDvDSelection());
+        dao.removeDvD(view.getIdDvDSelection());
         view.removeDvDBannerSuccess();
     }
-    private void getDvD(){
+    private void getDvD()throws DvDLibraryDaoException{
         view.displayDvDBanner();
-        DvD dvd = dao.getDvD(view.getTitleDvDSelection());
+        DvD dvd = dao.getDvD(view.getIdDvDSelection());
         view.getDvD(dvd);
         
     }
-    private void editDvD(){
+    private void editDvD() throws DvDLibraryDaoException{
         view.editDvDBanner();
-        DvD oldDvD = dao.getDvD(view.getTitleDvDSelection());
+        DvD oldDvD = dao.getDvD(view.getIdDvDSelection());
         view.editDvD(oldDvD);
-      
+        dao.editDvD();
         
     }
     private void goodBye(){

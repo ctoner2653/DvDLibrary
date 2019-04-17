@@ -17,11 +17,14 @@ public class DvD {
     public String DirectorName;
     public String studio;
     public String userRating;
-
-    public DvD(String title) {
-        this.title = title;
+    public String Id;
+    
+    public DvD(String Id) {
+        this.Id= Id;
     }
-
+    public String getId(){
+        return Id;
+    }
     public String getTitle() {
         return title;
     }

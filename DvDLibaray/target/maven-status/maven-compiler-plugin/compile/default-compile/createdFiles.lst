@@ -5,4 +5,5 @@ com\sg\dvdlibaray\ui\DvDLibarayView.class
 com\sg\dvdlibaray\dto\DvD.class
 com\sg\dvdlibaray\dao\DvDLibarayDao.class
 com\sg\dvdlibaray\main\App.class
+com\sg\dvdlibaray\dao\DvDLibraryDaoException.class
 com\sg\dvdlibaray\ui\UserIOConsoleImpl.class
